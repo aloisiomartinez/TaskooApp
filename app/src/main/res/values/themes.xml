@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Taskoo" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="android:windowBackground">@color/color_default</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
