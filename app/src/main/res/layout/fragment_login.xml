@@ -65,6 +65,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/btnRegister"
                 android:text="Criar conta"
                 android:textColor="@color/white"
                 android:layout_weight="1"
@@ -72,6 +73,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/btnRecover"
                 android:text="Recuperar conta"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
@@ -82,6 +84,8 @@
         </LinearLayout>
 
         <ProgressBar
+            tools:visibility="visible"
+            android:visibility="invisible"
             android:layout_gravity="center"
             android:indeterminateTint="@color/white"
             android:layout_width="wrap_content"
