@@ -1,4 +1,4 @@
-package com.example.taskoo.ui.auth
+package com.example.taskoo.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,20 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.taskoo.R
-import com.example.taskoo.databinding.FragmentRecoverAccountBinding
-import com.example.taskoo.databinding.FragmentRegisterBinding
+import com.example.taskoo.databinding.FragmentHomeBinding
+import com.example.taskoo.databinding.FragmentTodoBinding
 
 
-class RecoverAccountFragment : Fragment() {
-    private var _binding: FragmentRecoverAccountBinding? = null
+class TodoFragment : Fragment() {
+
+    private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRecoverAccountBinding.inflate(inflater, container, false)
+        _binding = FragmentTodoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -27,4 +27,6 @@ class RecoverAccountFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

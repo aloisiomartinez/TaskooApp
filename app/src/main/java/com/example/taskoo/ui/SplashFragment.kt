@@ -14,7 +14,6 @@ import com.example.taskoo.databinding.FragmentSplashBinding
 class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
