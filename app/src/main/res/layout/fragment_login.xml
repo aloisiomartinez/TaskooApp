@@ -85,6 +85,7 @@
         </LinearLayout>
 
         <ProgressBar
+            android:id="@+id/progressBar"
             tools:visibility="visible"
             android:visibility="invisible"
             android:layout_gravity="center"
