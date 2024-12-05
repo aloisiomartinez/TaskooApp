@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentLoginBinding
 import com.example.taskoo.databinding.FragmentRegisterBinding
+import com.example.taskoo.util.initToolbar
 
 
 class RegisterFragment : Fragment() {
@@ -21,6 +22,11 @@ class RegisterFragment : Fragment() {
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar)
     }
 
     override fun onDestroyView() {
