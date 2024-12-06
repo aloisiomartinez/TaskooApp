@@ -16,7 +16,7 @@
     </style>
 
     <style name="CustomRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:buttonTint">@color/white</item>
+        <item name="app:buttonTint">@color/white</item>
         <item name="android:textColor">@color/white</item>
     </style>
 </resources>

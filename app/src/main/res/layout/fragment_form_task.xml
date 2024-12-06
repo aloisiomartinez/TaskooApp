@@ -92,8 +92,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-
-                    style="@style/CustomRadioButton"
+                    app:buttonTint="@color/white"
+                    android:textColor="@color/white"
                     android:text="A Fazer"
                     android:checked="false"
                      />
@@ -103,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    app:buttonTint="@color/white"
                     android:buttonTint="@color/white"
                     android:text="Fazendo"
                     android:textColor="@color/white" />
@@ -111,6 +112,7 @@
                     android:id="@+id/rbDone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:buttonTint="@color/white"
                     android:layout_weight="1"
                     android:buttonTint="@color/white"
                     android:text="Feitas"
