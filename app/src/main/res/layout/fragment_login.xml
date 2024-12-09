@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:text="E-mail"
+            android:text="@string/email_text"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -30,11 +30,11 @@
             android:inputType="textEmailAddress"
             style="@style/EditTextTheme"
             android:layout_marginTop="4dp"
-            android:hint="Digite seu e-mail"
+            android:hint="@string/hint_edit_email"
             />
 
         <TextView
-            android:text="Senha"
+            android:text="@string/password_text"
             android:textColor="@color/white"
             android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:inputType="textPassword"
             style="@style/EditTextTheme"
             android:layout_marginTop="4dp"
-            android:hint="Digite sua senha"
+            android:hint="@string/hint_edit_password"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             style="@style/ButtomTheme"
             android:layout_marginTop="16dp"
-            android:text="Login"
+            android:text="@string/text_button_login_fragment"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
@@ -65,7 +65,7 @@
 
             <TextView
                 android:id="@+id/btnRegister"
-                android:text="Criar conta"
+                android:text="@string/text_button_register_login_fragment"
                 android:textColor="@color/white"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
 
             <TextView
                 android:id="@+id/btnRecover"
-                android:text="Recuperar conta"
+                android:text="@string/text_button_recover_login_fragment"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
                 android:textColor="@color/white"
