@@ -28,8 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:background="@drawable/bg_edit_text"
-            android:padding="16dp"
+            style="@style/EditTextTheme"
             android:layout_marginTop="4dp"
             android:hint="Digite seu e-mail"
             />
@@ -46,8 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:background="@drawable/bg_edit_text"
-            android:padding="16dp"
+            style="@style/EditTextTheme"
             android:layout_marginTop="4dp"
             android:hint="Digite sua senha"
             />
@@ -55,10 +53,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
-            android:textColor="@color/color_default"
+            style="@style/ButtomTheme"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_btn"
-            app:backgroundTint="@null"
             android:text="Login"
             android:layout_height="wrap_content"/>
 
