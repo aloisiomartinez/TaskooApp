@@ -95,7 +95,7 @@
                     app:buttonTint="@color/white"
                     android:textColor="@color/white"
                     android:text="A Fazer"
-                    android:checked="false"
+                    android:checked="true"
                      />
 
                 <RadioButton

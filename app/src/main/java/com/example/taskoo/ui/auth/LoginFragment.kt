@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentLoginBinding
 import com.example.taskoo.databinding.FragmentRegisterBinding
+import com.example.taskoo.util.showBottomSheet
 
 
 class LoginFragment : Fragment() {
@@ -46,18 +47,18 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun  validateData() {
+    private fun validateData() {
         val email = binding.edtEmail.text.toString().trim()
         val password = binding.edtPassword.toString().trim()
 
-        if(email.isNotEmpty()) {
+        if (email.isNotEmpty()) {
             if (password.isNotEmpty()) {
                 findNavController().navigate(R.id.action_global_homeFragment)
             } else {
-                Toast.makeText(requireContext(), "Preencha seu e-mail", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = R.string.password_empty)
             }
         } else {
-            Toast.makeText(requireContext(), "Preencha seu e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.email_empty)
         }
     }
 

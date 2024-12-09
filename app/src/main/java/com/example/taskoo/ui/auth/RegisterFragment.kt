@@ -11,6 +11,7 @@ import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentLoginBinding
 import com.example.taskoo.databinding.FragmentRegisterBinding
 import com.example.taskoo.util.initToolbar
+import com.example.taskoo.util.showBottomSheet
 
 
 class RegisterFragment : Fragment() {
@@ -49,10 +50,10 @@ class RegisterFragment : Fragment() {
                 Toast.makeText(requireContext(), "Tudo certo", Toast.LENGTH_SHORT).show()
 
             } else {
-                Toast.makeText(requireContext(), "Preencha uma senha", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = R.string.password_empty_register_fragment)
             }
         } else {
-            Toast.makeText(requireContext(), "Preencha um e-mail válido", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.email_empty_register_fragment)
         }
     }
 

@@ -11,6 +11,7 @@ import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentFormTaskBinding
 import com.example.taskoo.databinding.FragmentRecoverAccountBinding
 import com.example.taskoo.util.initToolbar
+import com.example.taskoo.util.showBottomSheet
 
 class FormTaskFragment : Fragment() {
 
@@ -47,7 +48,7 @@ class FormTaskFragment : Fragment() {
             Toast.makeText(requireContext(), "Tudo certo", Toast.LENGTH_SHORT).show()
 
         } else {
-            Toast.makeText(requireContext(), "Preencha seu e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.description_empty_form_task_fragment)
         }
     }
 
