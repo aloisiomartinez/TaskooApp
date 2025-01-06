@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskoo.R
 import com.example.taskoo.data.model.Status
@@ -14,6 +15,7 @@ import com.example.taskoo.data.model.Task
 import com.example.taskoo.databinding.FragmentHomeBinding
 import com.example.taskoo.databinding.FragmentTodoBinding
 import com.example.taskoo.ui.adapter.TaskAdapter
+import com.example.taskoo.ui.adapter.TaskTopAdapter
 
 
 class TodoFragment : Fragment() {
@@ -22,6 +24,7 @@ class TodoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var taskAdapter: TaskAdapter
+    private lateinit var taskTopAdapter: TaskTopAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,10 +55,19 @@ class TodoFragment : Fragment() {
             optionSelected(task, option)
         }
 
+        taskTopAdapter = TaskTopAdapter() { task, option ->
+            optionSelected(task, option)
+        }
+
+        val concatAdapter = ConcatAdapter(
+            taskTopAdapter,
+            taskAdapter
+        )
+
         with(binding.rvTasks) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            adapter = taskAdapter
+            adapter = concatAdapter
         }
 
     }
@@ -89,6 +101,11 @@ class TodoFragment : Fragment() {
 
 
     private fun getTasks() {
+        val taskTopList = listOf(
+            Task("0", "TSKTOPCriar nova tela do App", Status.TODO),
+            Task("1", "TSKTOPCriar nova tela do App de Login", Status.TODO),
+        )
+
         val taskList = listOf(
             Task("0", "Criar nova tela do App", Status.TODO),
             Task("1", "Criar nova tela do App de Login", Status.TODO),
@@ -99,6 +116,7 @@ class TodoFragment : Fragment() {
         )
 
         taskAdapter.submitList(taskList)
+        taskTopAdapter.submitList(taskTopList)
     }
 
     override fun onDestroyView() {

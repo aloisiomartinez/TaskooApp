@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582956915838",
+    "project_id": "taskoo-b3517",
+    "storage_bucket": "taskoo-b3517.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582956915838:android:1da67df70538f3e7e20c2f",
+        "android_client_info": {
+          "package_name": "com.example.taskoo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABehza50EP0r6b8YTKOpymXwi_lXNBo-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

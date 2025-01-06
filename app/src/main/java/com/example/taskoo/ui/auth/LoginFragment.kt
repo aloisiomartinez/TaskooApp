@@ -11,6 +11,9 @@ import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentLoginBinding
 import com.example.taskoo.databinding.FragmentRegisterBinding
 import com.example.taskoo.util.showBottomSheet
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 
 class LoginFragment : Fragment() {
