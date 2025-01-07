@@ -15,7 +15,14 @@ import com.example.taskoo.data.model.Task
 import com.example.taskoo.databinding.FragmentHomeBinding
 import com.example.taskoo.databinding.FragmentTodoBinding
 import com.example.taskoo.ui.adapter.TaskAdapter
-import com.example.taskoo.ui.adapter.TaskTopAdapter
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 
 
 class TodoFragment : Fragment() {
@@ -24,8 +31,9 @@ class TodoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var taskAdapter: TaskAdapter
-    private lateinit var taskTopAdapter: TaskTopAdapter
 
+    private lateinit var reference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +44,9 @@ class TodoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        reference = Firebase.database.reference
+        auth = Firebase.auth
 
         initListeners()
 
@@ -55,19 +66,10 @@ class TodoFragment : Fragment() {
             optionSelected(task, option)
         }
 
-        taskTopAdapter = TaskTopAdapter() { task, option ->
-            optionSelected(task, option)
-        }
-
-        val concatAdapter = ConcatAdapter(
-            taskTopAdapter,
-            taskAdapter
-        )
-
         with(binding.rvTasks) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            adapter = concatAdapter
+            adapter = taskAdapter
         }
 
     }
@@ -101,22 +103,23 @@ class TodoFragment : Fragment() {
 
 
     private fun getTasks() {
-        val taskTopList = listOf(
-            Task("0", "TSKTOPCriar nova tela do App", Status.TODO),
-            Task("1", "TSKTOPCriar nova tela do App de Login", Status.TODO),
-        )
+        reference
+            .child("task")
+            .child(auth.currentUser?.uid ?: "")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val taskList = mutableListOf<Task>()
+                    for (ds in snapshot.children) {
+                        val task = ds.getValue(Task::class.java) as Task
+                        taskList.add(task)
+                    }
+                    taskAdapter.submitList(taskList)
+                }
 
-        val taskList = listOf(
-            Task("0", "Criar nova tela do App", Status.TODO),
-            Task("1", "Criar nova tela do App de Login", Status.TODO),
-            Task("2", "Criar nova tela do App de Rec Senha", Status.TODO),
-            Task("3", "Salvar task", Status.TODO),
-            Task("4", "Deletar Task", Status.TODO),
-            Task("5", "Criar conta", Status.TODO)
-        )
-
-        taskAdapter.submitList(taskList)
-        taskTopAdapter.submitList(taskTopList)
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     override fun onDestroyView() {
