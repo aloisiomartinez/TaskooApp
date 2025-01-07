@@ -52,7 +52,7 @@ class RegisterFragment : Fragment() {
 
     private fun validateData() {
         val email = binding.edtEmail.text.toString().trim()
-        val password = binding.edtPassword.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
 
         if(email.isNotEmpty()) {
             if (password.isNotEmpty()) {
