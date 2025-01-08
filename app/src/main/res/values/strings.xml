@@ -42,6 +42,13 @@
     <string name="text_button_recover_account_fragment">Enviar</string>
     <string name="text_message_recover_account_fragment">Pronto, acabamos de enviar um link para seu e-mail.</string>
 
+    <!-- Erros Firebase Authentication -->
+    <string name="account_not_registered_register_fragment">Nenhuma conta encontrada com este e-mail</string>
+    <string name="invalid_email_register_fragment">Insira um e-mail válido.</string>
+    <string name="invalid_password_register_fragment">Senha inválida, tente novamente.</string>
+    <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
+    <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
+
     <!-- Home Fragment -->
     <string name="text_title_dialog_confirm_logout">Deseja sair da sua conta?</string>
     <string name="text_message_dialog_confirm_logout">Aperte em confirmar para sair da sua conta.</string>
