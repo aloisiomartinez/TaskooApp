@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentRecoverAccountBinding
 import com.example.taskoo.databinding.FragmentRegisterBinding
+import com.example.taskoo.util.FirebaseHelper
 import com.example.taskoo.util.initToolbar
 import com.example.taskoo.util.showBottomSheet
 import com.google.firebase.Firebase
@@ -72,8 +73,7 @@ class RecoverAccountFragment : Fragment() {
                     )
 
                 } else {
-
-                    Toast.makeText(requireContext(), task.exception?.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(FirebaseHelper.validError(task.exception?.message.toString())))
                 }
             }
     }

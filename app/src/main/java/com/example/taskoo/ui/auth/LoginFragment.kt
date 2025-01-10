@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskoo.R
 import com.example.taskoo.databinding.FragmentLoginBinding
 import com.example.taskoo.databinding.FragmentRegisterBinding
+import com.example.taskoo.util.FirebaseHelper
 import com.example.taskoo.util.showBottomSheet
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -81,7 +82,7 @@ class LoginFragment : Fragment() {
                 } else {
                     binding.progressBar.isVisible = false
 
-                    Toast.makeText(requireContext(), task.exception?.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(FirebaseHelper.validError(task.exception?.message.toString())))
                 }
             }
     }

@@ -15,6 +15,7 @@ import com.example.taskoo.data.model.Status
 import com.example.taskoo.data.model.Task
 import com.example.taskoo.databinding.FragmentFormTaskBinding
 import com.example.taskoo.databinding.FragmentRecoverAccountBinding
+import com.example.taskoo.util.FirebaseHelper
 import com.example.taskoo.util.initToolbar
 import com.example.taskoo.util.showBottomSheet
 import com.google.firebase.Firebase
@@ -33,9 +34,6 @@ class FormTaskFragment : Fragment() {
 
     private val args: FormTaskFragmentArgs by navArgs()
 
-    private lateinit var reference: DatabaseReference
-    private lateinit var auth: FirebaseAuth
-
     private val viewModel: TaskViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -49,9 +47,6 @@ class FormTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar)
-
-        reference = Firebase.database.reference
-        auth = Firebase.auth
 
         getArgs()
         initListeners()
@@ -109,7 +104,6 @@ class FormTaskFragment : Fragment() {
 
             if (newTask) {
                 task = Task()
-                task.id = reference.database.reference.push().key ?: ""
             }
 
             task.description = description
@@ -124,9 +118,9 @@ class FormTaskFragment : Fragment() {
     }
 
     private fun saveTask() {
-        reference
+        FirebaseHelper.getDatabase()
             .child("task")
-            .child(auth.currentUser?.uid ?: "")
+            .child(FirebaseHelper.getIdUser())
             .child(task.id)
             .setValue(task).addOnCompleteListener { result ->
                 if (result.isSuccessful) {
