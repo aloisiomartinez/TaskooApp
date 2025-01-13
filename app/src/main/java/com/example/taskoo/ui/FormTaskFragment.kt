@@ -63,6 +63,8 @@ class FormTaskFragment : BaseFragment() {
 
     private fun initListeners() {
         binding.btnSave.setOnClickListener {
+            observeViewModel()
+
             validateData()
         }
 
@@ -112,7 +114,11 @@ class FormTaskFragment : BaseFragment() {
             task.description = description
             task.status = status
 
-            saveTask()
+            if(newTask) {
+                viewModel.insertTask(task)
+            } else {
+                //viewModel.updateTask(task)
+            }
             // Toast.makeText(requireContext(), "Tudo certo", Toast.LENGTH_SHORT).show()
 
         } else {
@@ -120,34 +126,16 @@ class FormTaskFragment : BaseFragment() {
         }
     }
 
-    private fun saveTask() {
-        FirebaseHelper.getDatabase()
-            .child("task")
-            .child(FirebaseHelper.getIdUser())
-            .child(task.id)
-            .setValue(task).addOnCompleteListener { result ->
-                if (result.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.text_save_success_form_task_fragment,
-                        Toast.LENGTH_SHORT
-                    ).show()
+    private fun observeViewModel() {
+        viewModel.taskInsert.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.text_save_success_form_task_fragment, Toast.LENGTH_SHORT).show()
 
-                    if (newTask) { // Nova tarefa
-                        findNavController().popBackStack()
-                    } else { // Editando Tarefa
-                        viewModel.setUpdateTask(task)
-                        binding.progressBar.isVisible = false
-                    }
-
-                } else {
-                    binding.progressBar.isVisible = false
-
-                    showBottomSheet(message = getString(R.string.error_generic))
-                }
-
-            }
+            findNavController().popBackStack()
+            
+        }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
