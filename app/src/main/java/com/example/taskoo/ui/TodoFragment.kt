@@ -89,7 +89,6 @@ class TodoFragment : Fragment() {
         }
     }
 
-
     private fun initRecyclerView() {
         taskAdapter = TaskAdapter(requireContext()) { task, option ->
             optionSelected(task, option)
@@ -113,7 +112,6 @@ class TodoFragment : Fragment() {
                         deleteTask(task)
                     }
                 )
-
             }
 
             TaskAdapter.SELECT_EDIT -> {
@@ -128,8 +126,8 @@ class TodoFragment : Fragment() {
             }
 
             TaskAdapter.SELECT_NEXT -> {
-                Toast.makeText(requireContext(), "Next ${task.description}", Toast.LENGTH_SHORT)
-                    .show()
+                task.status = Status.DOING
+                updateTask(task)
             }
         }
     }
@@ -174,6 +172,28 @@ class TodoFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         R.string.text_delete_success_task,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.text_delete_success_task,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    private fun updateTask(task: Task) {
+        FirebaseHelper.getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser())
+            .child(task.id)
+            .setValue(task).addOnCompleteListener { result ->
+                if (result.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.text_update_success_form_task_fragment,
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
