@@ -97,14 +97,17 @@ class TodoFragment : Fragment() {
         }
 
         viewModel.taskUpdate.observe(viewLifecycleOwner) { updateTask ->
-            if (updateTask.status == Status.TODO) {
 
                 //Armazena lista atual do adapter
                 val oldList = taskAdapter.currentList
 
                 // Gera uma nova lista a partir da lista antiga já com a tarefa atualizada
                 val newList = oldList.toMutableList().apply {
-                    find { it.id == updateTask.id }?.description = updateTask.description
+                    if (updateTask.status == Status.TODO) {
+                        find { it.id == updateTask.id }?.description = updateTask.description
+                    } else {
+                        remove(updateTask)
+                    }
                 }
 
                 // Armazena a posicao da tarefa a ser atualizada na lista
@@ -115,7 +118,7 @@ class TodoFragment : Fragment() {
 
                 // Atualiza a tarefa pela posicao do Adapter
                 taskAdapter.notifyItemChanged(position)
-            }
+
         }
     }
 
@@ -157,7 +160,7 @@ class TodoFragment : Fragment() {
 
             TaskAdapter.SELECT_NEXT -> {
                 task.status = Status.DOING
-                updateTask(task)
+                viewModel.updateTask(task)
             }
         }
     }
@@ -187,28 +190,6 @@ class TodoFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         R.string.text_delete_success_task,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.text_delete_success_task,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-    }
-
-    private fun updateTask(task: Task) {
-        FirebaseHelper.getDatabase()
-            .child("task")
-            .child(FirebaseHelper.getIdUser())
-            .child(task.id)
-            .setValue(task).addOnCompleteListener { result ->
-                if (result.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.text_update_success_form_task_fragment,
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {

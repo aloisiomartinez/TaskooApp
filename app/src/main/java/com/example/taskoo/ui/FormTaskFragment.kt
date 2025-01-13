@@ -117,7 +117,7 @@ class FormTaskFragment : BaseFragment() {
             if(newTask) {
                 viewModel.insertTask(task)
             } else {
-                //viewModel.updateTask(task)
+                viewModel.updateTask(task)
             }
             // Toast.makeText(requireContext(), "Tudo certo", Toast.LENGTH_SHORT).show()
 
@@ -132,6 +132,15 @@ class FormTaskFragment : BaseFragment() {
 
             findNavController().popBackStack()
             
+        }
+
+        viewModel.taskUpdate.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.text_update_success_form_task_fragment, Toast.LENGTH_SHORT).show()
+
+            binding.progressBar.isVisible = false
+
+            findNavController().popBackStack()
+
         }
     }
 
