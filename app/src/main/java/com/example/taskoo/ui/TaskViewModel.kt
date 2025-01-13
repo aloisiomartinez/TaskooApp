@@ -1,5 +1,6 @@
 package com.example.taskoo.ui
 
+import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
@@ -7,11 +8,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.taskoo.R
+import com.example.taskoo.data.model.Status
 import com.example.taskoo.data.model.Task
 import com.example.taskoo.util.FirebaseHelper
 import com.example.taskoo.util.showBottomSheet
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class TaskViewModel: ViewModel() {
+
+    private val _taskList = MutableLiveData<List<Task>>()
+    val taskList: LiveData<List<Task>> = _taskList
 
     private val _taskInsert = MutableLiveData<Task>()
     val taskInsert: LiveData<Task> = _taskInsert
@@ -21,6 +29,29 @@ class TaskViewModel: ViewModel() {
 
     fun setUpdateTask(task:Task) {
         _taskUpdate.postValue(task)
+    }
+
+    fun getTasks(status: Status) {
+        FirebaseHelper.getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val taskList = mutableListOf<Task>()
+                    for (ds in snapshot.children) {
+                        val task = ds.getValue(Task::class.java) as Task
+                        if (task.status == status) {
+                            taskList.add(task)
+                        }
+                    }
+                    taskList.reverse()
+                    _taskList.postValue(taskList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.i("INFOTESTE", "onCancelled:")
+                }
+            })
     }
 
     fun insertTask(task: Task) {
