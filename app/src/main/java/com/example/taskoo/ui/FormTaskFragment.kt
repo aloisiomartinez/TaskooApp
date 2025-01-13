@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.database.*
 
-class FormTaskFragment : Fragment() {
+class FormTaskFragment : BaseFragment() {
 
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
@@ -100,6 +100,9 @@ class FormTaskFragment : Fragment() {
 
 
         if (description.isNotEmpty()) {
+
+            hideKeyboard()
+
             binding.progressBar.isVisible = true
 
             if (newTask) {
