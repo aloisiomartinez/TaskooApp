@@ -11,6 +11,7 @@ import com.example.taskoo.R
 import com.example.taskoo.data.model.Status
 import com.example.taskoo.data.model.Task
 import com.example.taskoo.util.FirebaseHelper
+import com.example.taskoo.util.StateView
 import com.example.taskoo.util.showBottomSheet
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -18,8 +19,8 @@ import com.google.firebase.database.ValueEventListener
 
 class TaskViewModel: ViewModel() {
 
-    private val _taskList = MutableLiveData<List<Task>>()
-    val taskList: LiveData<List<Task>> = _taskList
+    private val _taskList = MutableLiveData<StateView<List<Task>>>()
+    val taskList: LiveData<StateView<List<Task>>> = _taskList
 
     private val _taskInsert = MutableLiveData<Task>()
     val taskInsert: LiveData<Task> = _taskInsert
@@ -31,26 +32,32 @@ class TaskViewModel: ViewModel() {
     val taskDelete: LiveData<Task> = _taskDelete
 
     fun getTasks(status: Status) {
-        FirebaseHelper.getDatabase()
-            .child("task")
-            .child(FirebaseHelper.getIdUser())
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val taskList = mutableListOf<Task>()
-                    for (ds in snapshot.children) {
-                        val task = ds.getValue(Task::class.java) as Task
-                        if (task.status == status) {
-                            taskList.add(task)
-                        }
-                    }
-                    taskList.reverse()
-                    _taskList.postValue(taskList)
-                }
+       try {
+           _taskList.postValue(StateView.OnLoading())
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.i("INFOTESTE", "onCancelled:")
-                }
-            })
+           FirebaseHelper.getDatabase()
+               .child("task")
+               .child(FirebaseHelper.getIdUser())
+               .addListenerForSingleValueEvent(object : ValueEventListener {
+                   override fun onDataChange(snapshot: DataSnapshot) {
+                       val taskList = mutableListOf<Task>()
+                       for (ds in snapshot.children) {
+                           val task = ds.getValue(Task::class.java) as Task
+                           if (task.status == status) {
+                               taskList.add(task)
+                           }
+                       }
+                       taskList.reverse()
+                       _taskList.postValue(StateView.OnSuccess(taskList))
+                   }
+
+                   override fun onCancelled(error: DatabaseError) {
+                       Log.i("INFOTESTE", "onCancelled:")
+                   }
+               })
+       } catch (ex: Exception) {
+           _taskList.postValue(StateView.OnError(ex.message.toString()))
+       }
     }
 
     fun insertTask(task: Task) {

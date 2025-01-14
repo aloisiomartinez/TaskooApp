@@ -20,6 +20,7 @@ import com.example.taskoo.databinding.FragmentHomeBinding
 import com.example.taskoo.databinding.FragmentTodoBinding
 import com.example.taskoo.ui.adapter.TaskAdapter
 import com.example.taskoo.util.FirebaseHelper
+import com.example.taskoo.util.StateView
 import com.example.taskoo.util.showBottomSheet
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -69,13 +70,25 @@ class TodoFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.taskList.observe(viewLifecycleOwner) { taskList ->
+        viewModel.taskList.observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.OnLoading -> {
+                    binding.progressBar.isVisible = true
+                }
 
-            binding.progressBar.isVisible = false
+                is StateView.OnSuccess -> {
+                    binding.progressBar.isVisible = false
 
-            listEmpty(taskList)
+                    listEmpty(stateView.data ?: emptyList())
 
-            taskAdapter.submitList(taskList)
+                    taskAdapter.submitList(stateView.data)
+                }
+
+                is StateView.OnError -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                }
+            }
 
         }
 
